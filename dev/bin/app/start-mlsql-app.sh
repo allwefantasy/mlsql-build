@@ -23,4 +23,6 @@ cd "$base" || return
 MAIN_JAR=$(ls ${base}/main | grep 'streamingpro-mlsql')
 echo ${MAIN_JAR}
 
-java -cp ${base}/main/${MAIN_JAR}:${base}/libs/* tech.mlsql.example.app.LocalSparkServiceApp
+java -cp ${base}/main/${MAIN_JAR}:${base}/spark/*:${base}/libs/*:${base}/plugin/* \
+tech.mlsql.example.app.LocalSparkServiceApp \
+-streaming.plugin.clzznames tech.mlsql.plugins.assert.app.MLSQLAssert,tech.mlsql.plugins.ds.MLSQLExcelApp

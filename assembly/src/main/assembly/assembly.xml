@@ -8,9 +8,9 @@
     <fileSets>
         <!-- Executables -->
         <fileSet>
-            <directory>${project.parent.basedir}/dev/bin/standalone</directory>
+            <directory>${project.parent.basedir}/dev/bin/app</directory>
             <includes>
-                <include>start-mlsql.sh</include>
+                <include>start-mlsql-app.sh</include>
             </includes>
             <outputDirectory>bin</outputDirectory>
         </fileSet>
@@ -26,31 +26,32 @@
 
         <!-- Plugins -->
         <fileSet>
-            <directory>${project.parent.basedir}/dev/</directory>
-            <!-- Include empty.json as a placeholder, to avoid every other files being copied -->
+            <directory>${project.parent.basedir}/dev/docker/mlsql-sandbox/lib</directory>
             <includes>
-                <include>empty.json</include>
+                <!-- Assert plugin -->
+                <include>mlsql-assert-${spark.bigversion}_${scala.binary.version}.jar</include>
+                <include>mlsql-excel-${spark.bigversion}_${scala.binary.version}.jar</include>
             </includes>
             <outputDirectory>plugin</outputDirectory>
         </fileSet>
 
         <!-- Libs -->
         <fileSet>
-            <directory>${project.parent.basedir}/dev/docker/mlsql-sandbox</directory>
+            <directory>${project.parent.basedir}/dev/docker/mlsql-sandbox/lib</directory>
             <includes>
                 <include>nlp-lang-1.7.8.jar</include>
-                <include>ansj_seg-5.1.6.jarnlp-lang-1.7.8.jar</include>
+                <include>ansj_seg-5.1.6.jar</include>
                 <include>juicefs-hadoop-0.15.2-linux-amd64.jar</include>
             </includes>
             <outputDirectory>libs</outputDirectory>
         </fileSet>
         <!-- Spark jars -->
         <fileSet>
-            <directory>${project.parent.basedir}/dev/bin/standalone/spark/jars</directory>
+            <directory>${project.parent.basedir}/dev/bin/app/spark/jars</directory>
             <includes>
                 <include>*</include>
             </includes>
-            <outputDirectory>libs</outputDirectory>
+            <outputDirectory>spark</outputDirectory>
         </fileSet>
     </fileSets>
 </assembly>

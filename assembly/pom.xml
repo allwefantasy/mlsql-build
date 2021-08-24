@@ -51,7 +51,7 @@
     </profiles>
 
     <build>
-        <finalName>mlsql-standalone_${spark.bigversion}-${project.version}</finalName>
+        <finalName>mlsql-app_${spark.bigversion}-${project.version}</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

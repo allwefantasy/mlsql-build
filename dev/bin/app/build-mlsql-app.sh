@@ -37,20 +37,21 @@ if [[ ${SPARK_VERSION} == "2.4.3" ]]
 then
   export MLSQL_SPARK_VERSION=2.4
   scala_binary_version=2.11
+  spark_dist="spark-${SPARK_VERSION}-bin-hadoop2.7"
 else
   export MLSQL_SPARK_VERSION=3.0
   scala_binary_version=2.12
+  spark_dist="spark-${SPARK_VERSION}-bin-hadoop3.2"
 fi
-echo ${MLSQL_SPARK_VERSION}
 
-## Builds mlsql engine
+## Build mlsql engine
 base=$(cd "$(dirname "$0")"/../../.. && pwd)
 cd ${base}/mlsql || exit 1
-##./dev/make-distribution.sh
+./dev/make-distribution.sh
 
 ## Untar spark distribution package
 mlsql_sandbox_path="${base}/dev/docker/mlsql-sandbox"
-spark_dist="spark-${SPARK_VERSION}-bin-hadoop2.7"
+
 if [[ ! -f "${mlsql_sandbox_path}/lib/${spark_dist}.tgz" ]]
 then
   cat << EOF
@@ -58,9 +59,10 @@ Please put ${spark_dist}.tgz in directory: ${mlsql_sandbox_path}/lib
 EOF
   exit 1
 fi
-echo ${base}/dev/bin/standalone
-tar -xf ${mlsql_sandbox_path}/lib/${spark_dist}.tgz -C "${base}/dev/bin/standalone"
-mv ${base}/dev/bin/standalone/${spark_dist} ${base}/dev/bin/standalone/spark
+
+tar -xf ${mlsql_sandbox_path}/lib/${spark_dist}.tgz -C "${base}/dev/bin/app"
+rm -rf ${base}/dev/bin/app/spark
+mv ${base}/dev/bin/app/${spark_dist} ${base}/dev/bin/app/spark
 
 ## Run assembly plugin to build mlsql standalone app
 cd ${base} || exit 1
